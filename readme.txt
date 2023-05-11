@@ -1,0 +1,12 @@
+- TS (Hapi/NestJS) => hapijs[TS] => OK
+- Use Knex/TypeORM => TypeORM => OK
+- MySQL => OK
+- UserRoles Access
+- Firebase Auth
+- JWT Sessions
+- Deploy AWS/GCP
+- Implement Swagger Docs
+- Complete documentation
+- User GitHub/GitLab
+- Create CI/CD pipelines
+- Clean code => OK

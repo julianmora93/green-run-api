@@ -1,0 +1,25 @@
+{
+  "name": "green-run-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "startLocal": "nodemon -e ts --exec \"npm run buildAndRun\"",
+    "buildAndRun": "tsc && node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.2",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.16"
+  },
+  "devDependencies": {
+    "@types/hapi": "^18.0.8",
+    "@types/node": "^20.1.2",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
+  }
+}

@@ -7,6 +7,6 @@
 - Deploy AWS/GCP
 - Implement Swagger Docs
 - Complete documentation
-- User GitHub/GitLab
+- User GitHub/GitLab => GitHub => OK
 - Create CI/CD pipelines
 - Clean code => OK

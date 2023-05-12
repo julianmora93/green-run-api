@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import { StateEnum } from "../utils/state.enum";
 
 @Entity({ name: 'documents' })
-export class DocumentEntity extends BaseEntity {
+export class DocumentEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 

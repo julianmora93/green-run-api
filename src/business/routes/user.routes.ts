@@ -19,7 +19,6 @@ export class UserRoutes {
             method: 'POST',
             path: '/user/signin',
             options: {
-                //handler: this._userController.signin
                 handler: this._authenticationController.signin
             }
         });
@@ -28,15 +27,7 @@ export class UserRoutes {
             method: 'POST',
             path: '/user/signup',
             options: {
-                handler: this._userController.signup
-            }
-        });
-
-        this._server.route({
-            method: 'POST',
-            path: '/user/verify',
-            options: {
-                handler: this._userController.virifyToken
+                handler: this._userController.createUser
             }
         });
     }

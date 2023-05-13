@@ -7,14 +7,12 @@ import { TransactionEntity } from "./entities/transaction.entity";
 import { TransactionTypeEntity } from "./entities/transaction.type.entity";
 import { UserEntity } from "./entities/user.entity";
 import { UserStateEntity } from "./entities/user.state.entity";
-import { DbConnection } from "./configuration/db.connection";
+import { DbConnection } from "../common/configuration/db.connection";
 import "reflect-metadata";
-import { DocumentData } from "../data/document.data";
 
 const _entities = [
     DocumentEntity,
     CountryEntity,
-    DocumentData,
     GenderEntity,
     RoleEntity,
     TransactionEntity,
@@ -23,15 +21,13 @@ const _entities = [
     UserStateEntity
 ];
 
-const _connect: DbConnection = new DbConnection();
-
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: _connect.host,
-    port: _connect.port,
-    username: _connect.username,
-    password: _connect.password,
-    database: _connect.database,
+    host: DbConnection.host,
+    port: DbConnection.port,
+    username: DbConnection.username,
+    password: DbConnection.password,
+    database: DbConnection.database,
     synchronize: false,
     bigNumberStrings: true,
     supportBigNumbers: true,

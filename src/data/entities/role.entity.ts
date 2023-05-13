@@ -1,17 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { StateEnum } from "../utils/state.enum";
+import { StateEnum } from "../../common/utils/state.enum";
 import { UserEntity } from "./user.entity";
 
-@Entity({ name: 'countries' })
-export class CountryEntity {
+@Entity({ name: 'roles' })
+export class RoleEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
     @Column()
     description!: string;
-
-    @Column()
-    code!: string;
 
     @Column({
         type: 'enum',
@@ -19,7 +16,6 @@ export class CountryEntity {
     })
     state!: StateEnum;
 
-    
-    @OneToMany(_ => UserEntity, user => user.country)
-    countryUser?: UserEntity[];
+    @OneToMany(_ => UserEntity, roleUser => roleUser.role)
+    roleUser?: UserEntity[];
 }

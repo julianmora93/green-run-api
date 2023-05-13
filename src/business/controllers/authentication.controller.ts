@@ -4,6 +4,7 @@ import { ErrorCodes } from "../../common/utils/error.codes.enum";
 import { DefaultResponseDto } from "../../common/dto/default.response.dto";
 
 export class AuthenticationController {
+    
     //-- Iniciar sesion para los usuario
     async signin(request: Request, result: ResponseToolkit): Promise<ResponseObject>{
         const dataResult: DefaultResponseDto<string> = {

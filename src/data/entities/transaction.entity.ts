@@ -22,6 +22,12 @@ export class TransactionEntity {
     @Column()
     amount!: number;
 
+    @Column({ name: 'old_balance' })
+    oldBalance!: number;
+
+    @Column({ name: 'new_balance' })
+    newBalance!: number;
+
     @Column({ name: 'created_at' })
     createdAt!: Date;
 

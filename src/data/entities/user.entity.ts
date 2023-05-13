@@ -78,4 +78,7 @@ export class UserEntity {
 
     @Column({ name: 'deleted_at' })
     deletedAt?: Date;
+
+    @Column()
+    balance!: number;
 }

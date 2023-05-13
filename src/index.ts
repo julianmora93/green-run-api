@@ -1,10 +1,10 @@
 import { InitServer } from './common/app';
-import { AppDataSource } from './common/app.data.source';
+import { AppDataSource } from './data/data.source';
 
 InitServer();
-console.log('----- ', new Date());
+
 AppDataSource.initialize()
     .then(() => {
-        // here you can start to work with your database
+        console.log('=> JMORA_LOG: Server Start');
     })
     .catch((error) => console.log(error))

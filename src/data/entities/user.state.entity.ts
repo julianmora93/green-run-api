@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
-import { StateEnum } from "../utils/state.enum";
+import { StateEnum } from "../../common/utils/state.enum";
 import { UserEntity } from "./user.entity";
 
 @Entity({ name: 'users_state' })

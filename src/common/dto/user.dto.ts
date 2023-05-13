@@ -10,7 +10,6 @@ export interface CreateUserDto {
     address: string;
     birthDate: Date;
     city: string;
-
     roleId: number;
     genderId: number;
     countryId: number;

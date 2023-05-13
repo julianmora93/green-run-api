@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
-import { StateEnum } from "../utils/state.enum";
+import { StateEnum } from "../../common/utils/state.enum";
 
 @Entity({ name: 'documents' })
 export class DocumentEntity {

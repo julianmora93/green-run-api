@@ -1,7 +1,4 @@
 import { Server } from '@hapi/hapi';
-// import { initializeApp } from 'firebase-admin/app';
-// import { credential } from 'firebase-admin';
-// import account_config = require("./account_config.json");
 
 import { UserRoutes } from '../business/routes/user.routes';
 import { DocumentRoutes } from '../business/routes/document.routes';
@@ -12,7 +9,8 @@ import * as Inert from '@hapi/inert';
 import * as Vision from '@hapi/vision';
 import { AppFirebaseAdmin } from './app.firebase.admin';
 import { AppFirebaseClient } from './app.firebase.client';
-//import { FirebaseAdmin_ServiceAccountId } from './configuration/firebase.config';
+import { TransactionRoutes } from '../business/routes/transaction.routes';
+import { AuthBearer } from '../business/security/auth.bearer';
 
 export const InitServer = async () => {
 
@@ -20,6 +18,8 @@ export const InitServer = async () => {
         port: 3000,
         host: 'localhost'
     });
+
+    //#region Swwagger Config
 
     const swaggerOptions: HapiSwagger.RegisterOptions = {
         info: {
@@ -42,14 +42,42 @@ export const InitServer = async () => {
         options: swaggerOptions
     }];
 
+    await server.register(plugins);
+
+    //#endregion
+
+    //#region Firebase Config
+
     new AppFirebaseAdmin();
-    
+
     new AppFirebaseClient();
 
-    await server.register(plugins);
+    //#endregion
+
+    //#region AuthBearer Config
+
+    const hapiAuthBearerToken = require('hapi-auth-bearer-token');
+    await server.register(hapiAuthBearerToken);
+    server.auth.strategy('use-bearer-token', 'bearer-access-token', {
+        allowQueryToken: true,
+        validate: async (_request: any, token: any, _h: any) => {
+            const authBearer = new AuthBearer();
+            return authBearer.virify(token);
+        }
+    });
+
+    //#endregion
+    
+    //#region Routes Config
+
+    new DocumentRoutes(server).Initialize();
+
+    new UserRoutes(server).Initialize();
+
+    new TransactionRoutes(server).Initialize();
+
+    //#endregion
 
     await server.start();
 
-    new DocumentRoutes(server).Initialize();
-    new UserRoutes(server).Initialize();
 }

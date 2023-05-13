@@ -1,7 +1,7 @@
-import { AppDataSource } from "../common/app.data.source";
-import { DocumentEntity } from "../common/entities/document.entity";
+import { AppDataSource } from "../data.source";
+import { DocumentEntity } from "../entities/document.entity";
 
-export class DocumentData {
+export class DocumentRepository {
 
     static getAll(): Promise<DocumentEntity[]> {
         return AppDataSource.manager.find(DocumentEntity);

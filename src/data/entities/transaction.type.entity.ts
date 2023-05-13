@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { StateEnum } from "../utils/state.enum";
-import { OperationEnum } from "../utils/operation.enum";
+import { StateEnum } from "../../common/utils/state.enum";
+import { OperationEnum } from "../../common/utils/operation.enum";
 import { TransactionEntity } from "./transaction.entity";
 
 @Entity({ name: 'transaction_type' })

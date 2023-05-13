@@ -10,6 +10,9 @@ export class UserEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
+    @Column({ name: 'firebase_uid' })
+    firebaseId!: string;
+
     @ManyToOne(_ => RoleEntity, role => role.roleUser)
     @JoinColumn({
         name: 'role_id'

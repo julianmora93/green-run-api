@@ -31,9 +31,7 @@ export class DocumentController {
     }
 
     async getById(request: Request, result: ResponseToolkit): Promise<ResponseObject>{
-
-        console.log('[request] => ', request.params);
-
+        
         const dataResult: DefaultResponseDto<DocumentEntity | null> = {
             status: true,
             codeStatus: 'OK',

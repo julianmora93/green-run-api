@@ -1,4 +1,4 @@
-import { AppDataSource } from "../common/data.source";
+import { AppDataSource } from "../common/app.data.source";
 import { DocumentEntity } from "../common/entities/document.entity";
 
 export class DocumentData {

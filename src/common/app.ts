@@ -1,42 +1,25 @@
 import { Server } from '@hapi/hapi';
-import { plugin } from '@hapi/inert';
+// import { initializeApp } from 'firebase-admin/app';
+// import { credential } from 'firebase-admin';
+// import account_config = require("./account_config.json");
+
+import { UserRoutes } from '../business/routes/user.routes';
 import { DocumentRoutes } from '../business/routes/document.routes';
 
 import * as Hapi from '@hapi/hapi';
 import * as HapiSwagger from 'hapi-swagger';
 import * as Inert from '@hapi/inert';
 import * as Vision from '@hapi/vision';
-
+import { AppFirebaseAdmin } from './app.firebase.admin';
+import { AppFirebaseClient } from './app.firebase.client';
+//import { FirebaseAdmin_ServiceAccountId } from './configuration/firebase.config';
 
 export const InitServer = async () => {
-    // const server: Server = new Server({
-    //     port: 3000,
-    //     host: 'localhost'
-    // });
-
-    // new DocumentRoutes(server).Initialize();
-
-    // await server.start();
-    // console.log('=>>>> JMORA_LOG[./src/app.ts] => init: Server runing on %s', server.info.uri);
-
 
     const server: Server = new Server({
         port: 3000,
         host: 'localhost'
     });
-
-    // const swaggerOptions: HapiSwagger.RegisterOptions = {
-    //     info: {
-    //         title: 'Test API Documentation',
-    //         version: '5.14.3',
-    //         contact: {
-    //             name: 'Glenn Jones',
-    //             email: 'glenn@example.com'
-    //         },
-    //     }
-    //     schemes: ['https'],
-    //     host: 'example.com'
-    // };
 
     const swaggerOptions: HapiSwagger.RegisterOptions = {
         info: {
@@ -58,10 +41,15 @@ export const InitServer = async () => {
         plugin: HapiSwagger,
         options: swaggerOptions
     }];
+
+    new AppFirebaseAdmin();
     
+    new AppFirebaseClient();
+
     await server.register(plugins);
 
     await server.start();
 
     new DocumentRoutes(server).Initialize();
+    new UserRoutes(server).Initialize();
 }

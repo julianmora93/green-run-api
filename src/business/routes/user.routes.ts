@@ -1,10 +1,44 @@
-// import { Server } from "@hapi/hapi";
-// import { CreateUserController } from "../controllers/users.controller";
+import { AuthenticationController } from "../controllers/authentication.controller";
+import { UserController } from "../controllers/user.controller";
+import { Server } from "@hapi/hapi";
 
-// export const UserRoutes = (server: Server) => {
-//     server.route({
-//         method: 'GET',
-//         path: '/users',
-//         handler: CreateUserController
-//     })
-// }
+export class UserRoutes {
+
+    private _server: Server;
+    private _userController: UserController;
+    private _authenticationController: AuthenticationController
+
+    constructor(server: Server){
+        this._server = server;
+        this._userController = new UserController();
+        this._authenticationController = new AuthenticationController();
+    }
+
+    Initialize(): void {
+        this._server.route({
+            method: 'POST',
+            path: '/user/signin',
+            options: {
+                //handler: this._userController.signin
+                handler: this._authenticationController.signin
+            }
+        });
+
+        this._server.route({
+            method: 'POST',
+            path: '/user/signup',
+            options: {
+                handler: this._userController.signup
+            }
+        });
+
+        this._server.route({
+            method: 'POST',
+            path: '/user/verify',
+            options: {
+                handler: this._userController.virifyToken
+            }
+        });
+    }
+
+}

@@ -50,7 +50,7 @@ Logica de negocio:
     OK => Enumere todas las apuestas (se pueden filtrar por evento o deporte específico) (tabla de apuestas)
     NO => Enumere todas las transacciones del usuario (también se puede filtrar por usuario específico y/o categoría)
     NO => Solicitar saldo de usuario
-    NO => Cambiar el estado de una apuesta (activa/cancelada)
+    OK => Cambiar el estado de una apuesta (activa/cancelada)
     NO => Bloquear a un usuario específico (estado de usuario => activo/bloqueado) (no se pueden bloquear otros administradores)
     NO => Resultados de apuestas resueltas (ganadas/perdidas) 
         NO => Esta liquidación debería generar pagos para los usuarios que hayan realizado una apuesta por el opción ganadora en caso de ganar
@@ -63,8 +63,8 @@ Logica de negocio:
     NO => Los administradores pueden actualizar los datos de los usuarios (no de otros administradores)
     NO => Las apuestas deben tener un estado diferente (activas/canceladas/establecidas) teniendo en cuenta los siguientes requisitros
         OK => Los usuarios no pueden realizar apuestas en apuestas canceladas o resueltas
-        NO => Las apuestas ya liquidadas no se pueden cancelar
-        NO => Las apuestas canceladas se pueden volver a activar
+        OK => Las apuestas ya liquidadas no se pueden cancelar
+        OK => Las apuestas canceladas se pueden volver a activar
     NO => El saldo del usuario debe calcularse en función de las transacciones del usuario.
     NO => Los administradores pueden liquidar los resultados de las apuestas para un event_id específico y cada una de sus opciones de
        apuesta (ganadas/perdidas) y luego el punto final debe activar los pagos para todas las transacciones de apuestas en la

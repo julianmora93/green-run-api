@@ -6,9 +6,9 @@ import { TransactionTypeRepository } from "../../data/repository/transaction.typ
 import { OperationEnum } from "../../common/utils/operation.enum";
 import { TransactionDto } from "../../common/dto/transaction.dto";
 import { UserRepository } from "../../data/repository/user.respository";
-import { AuthResponseCredentialsDto } from "../../common/dto/auth.response.dto";
 import { UserEntity } from "../../data/entities/user.entity";
 import { TransactionRepository } from "../../data/repository/transaction.repository";
+import { TransactionsBalanceDto } from "../../common/dto/transactions.balance.dto";
 
 export class TransactionController {
 
@@ -30,18 +30,8 @@ export class TransactionController {
             }else{
                 userData = await UserRepository.getByFirebaseId(request.auth.credentials.firebaseId as string);
             }
-
-            console.log('------------------------------------------------------------------------------------------------');
-            console.log('TransactionController >> JMORA[request] => ', request.auth);
-            console.log('------------------------------------------------------------------------------------------------');
-            console.log('TransactionController >> JMORA[paramas] => ', paramas);
-            console.log('------------------------------------------------------------------------------------------------');
-
             const transactionType = await TransactionTypeRepository.getById(paramas.transactionTypeId);
             let newAmount = 0;
-            console.log('--------------------------------------------------------------------------------------------------------')
-            console.log('JMORA[transactionType!.operation] => ', transactionType!.operation);
-            console.log('--------------------------------------------------------------------------------------------------------')
             if(transactionType!.operation == OperationEnum.ADD){
                 //-- Toma el valor que tenga el usuario en 'balance' y le suma el monto del deposito
                 newAmount = userData!.balance + paramas.amount;
@@ -73,6 +63,59 @@ export class TransactionController {
             }
             userData!.balance = newAmount;
 
+            return result.response(dataResult);
+        } catch(error: any) {
+            dataResult.codeStatus = '0x0002';
+            dataResult.message = `Error: ${ErrorCodes["0x0002"]} - ${error.message}`;
+            dataResult.status = false;
+            dataResult.data = null;
+            return result.response(dataResult).code(500);
+        }
+    }
+
+    async getUserTransactions(request: Request, result: ResponseToolkit): Promise<ResponseObject>{
+        const dataResult: DefaultResponseDto<TransactionsBalanceDto | null> = {
+            status: true,
+            codeStatus: 'OK',
+            data: null,
+            message: 'OK'
+        };
+        try {
+            const firebaseId: string = request.auth.credentials.firebaseId as string;
+            //Se procede a validar que el usuario tenga el rol = 1 (Usuario)
+            //NOTA: Esto se podria almacenar en una constaante ya que al moemnto de desplegar en otro ambiente o DB este id puede cambiar
+            // y no esta bien que ese valor quede 'quemado', pero para el demo pues.... :P
+            const validationResult = await UserRepository.validateRole(firebaseId, 1);
+            if(validationResult && validationResult.hasRole === 1){
+                const user = await UserRepository.getById(validationResult.userId);
+                if(user){
+                    const transactoins = await TransactionRepository.getByUser(user);
+                    if(transactoins){
+                        dataResult.data = {
+                            balance: user.balance,
+                            transactions: transactoins
+                        };
+                    }else{
+                        dataResult.codeStatus = '0x0002';
+                        dataResult.message = `Error: ${ErrorCodes["0x0002"]}`;
+                        dataResult.status = false;
+                        dataResult.data = null;
+                        return result.response(dataResult).code(500);
+                    }
+                }else{
+                    dataResult.codeStatus = '0x0001';
+                    dataResult.message = `Error: ${ErrorCodes["0x0001"]}`;
+                    dataResult.status = false;
+                    dataResult.data = null;
+                    return result.response(dataResult).code(401);
+                }
+            }else{
+                dataResult.codeStatus = '0x0001';
+                dataResult.message = `Error: ${ErrorCodes["0x0001"]}`;
+                dataResult.status = false;
+                dataResult.data = null;
+                return result.response(dataResult).code(401);
+            }
             return result.response(dataResult);
         } catch(error: any) {
             dataResult.codeStatus = '0x0002';

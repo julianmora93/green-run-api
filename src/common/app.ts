@@ -11,6 +11,7 @@ import { AppFirebaseAdmin } from './app.firebase.admin';
 import { AppFirebaseClient } from './app.firebase.client';
 import { TransactionRoutes } from '../business/routes/transaction.routes';
 import { AuthBearer } from '../business/security/auth.bearer';
+import { AdminRoutes } from '../business/routes/admin.routes';
 
 export const InitServer = async () => {
 
@@ -75,6 +76,8 @@ export const InitServer = async () => {
     new UserRoutes(server).Initialize();
 
     new TransactionRoutes(server).Initialize();
+
+    new AdminRoutes(server).Initialize();
 
     //#endregion
 

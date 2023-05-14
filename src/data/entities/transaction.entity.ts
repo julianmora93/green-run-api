@@ -33,4 +33,7 @@ export class TransactionEntity {
 
     @Column({ name: 'updated_at' })
     updatedAt?: Date;
+
+    @Column({ name: 'bet_id' })
+    betId?: number;
 }

@@ -9,6 +9,8 @@ import { UserEntity } from "./entities/user.entity";
 import { UserStateEntity } from "./entities/user.state.entity";
 import { DbConnection } from "../common/configuration/db.connection";
 import "reflect-metadata";
+import { BetsEntity } from "./entities/bets.entity";
+import { userBetsEntity } from "./entities/user.bets.entity";
 
 const _entities = [
     DocumentEntity,
@@ -18,7 +20,9 @@ const _entities = [
     TransactionEntity,
     TransactionTypeEntity,
     UserEntity,
-    UserStateEntity
+    UserStateEntity,
+    BetsEntity,
+    userBetsEntity
 ];
 
 export const AppDataSource = new DataSource({

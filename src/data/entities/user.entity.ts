@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { TransactionEntity } from "./transaction.entity";
-import { RoleEntity } from "./role.entity";
 import { GenderEntity } from "./genders.entity";
 import { CountryEntity } from "./country.entity";
 import { UserStateEntity } from "./user.state.entity";
@@ -12,12 +11,6 @@ export class UserEntity {
 
     @Column({ name: 'firebase_uid' })
     firebaseId!: string;
-
-    @ManyToOne(_ => RoleEntity, role => role.roleUser)
-    @JoinColumn({
-        name: 'role_id'
-    })
-    role!: RoleEntity
 
     @ManyToOne(_ => GenderEntity, gender => gender.genderUser)
     @JoinColumn({
